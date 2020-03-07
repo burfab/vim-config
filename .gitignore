@@ -1,1 +1,5 @@
 plugged/*
+
+# MAC OS Specific files
+.DS_Store
+.netrwhist
