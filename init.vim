@@ -24,6 +24,9 @@ call plug#begin('~/.config/nvim/plugged')
 Plug 'rafi/awesome-vim-colorschemes'
 Plug 'arzg/vim-colors-xcode'
 Plug 'rainglow/vim'
+Plug 'drewtempelmeyer/palenight.vim'
+Plug 'rakr/vim-one'
+Plug 'arcticicestudio/nord-vim'
 
 " Project Tree
 Plug 'scrooloose/nerdtree'
@@ -58,7 +61,8 @@ au VimEnter * wincmd l
 
 " Theme
 "hc for high contrast
-colorscheme molokayo 
+colorscheme ayu
+set background=dark
 
 
 " Terminal settings
