@@ -1,3 +1,16 @@
+if has('nvim')
+	if empty(glob('~/.config/nvim/autoload/plug.vim'))
+	  silent !curl -fLo ~/.config/nvim/autoload/plug.vim --create-dirs
+	    \ https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
+	  autocmd VimEnter * PlugInstall --sync | source $MYVIMRC
+	endif
+else 
+	if empty(glob('~/.vim/autoload/plug.vim'))
+	  silent !curl -fLo ~/.vim/autoload/plug.vim --create-dirs
+	    \ https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
+	  autocmd VimEnter * PlugInstall --sync | source $MYVIMRC
+	endif
+endif
 
 " #####################################
 " for vim
@@ -48,20 +61,38 @@ au VimEnter * wincmd l
 colorscheme molokayo 
 
 
+" Terminal settings
+
+if $TERM =~ '^\(rxvt\|screen\|interix\|putty\)\(-.*\)\?$'
+        set notermguicolors
+    elseif $TERM =~ '^\(tmux\|iterm\|vte\|gnome\)\(-.*\)\?$'
+        set termguicolors
+    elseif $TERM =~ '^\(xterm\)\(-.*\)\?$'
+        if $XTERM_VERSION != ''
+            set termguicolors
+        elseif $KONSOLE_PROFILE_NAME != ''
+            set termguicolors
+        elseif $VTE_VERSION != ''
+            set termguicolors
+        else
+            set termguicolors
+        endif
+endif
+
+
 " Editor settings
-set guifont=Fira\ Code:h12
 
 " line numbers
 set number
 set ruler
 syntax enable
-set termguicolors
 
 " Set Proper Tabs
 set tabstop=4
 set shiftwidth=4
 set smarttab
 set expandtab
+set ignorecase
 
 " Always display the status line
 set laststatus=2
@@ -69,8 +100,6 @@ set laststatus=2
 " Enable Elite mode, No ARRRROWWS!!!!
 let g:elite_mode=1
 
-" Enable highlighting of the current line
-set cursorline
 
 " Custom constants
 " Disable arrow movement, resize splits instead.
@@ -80,6 +109,20 @@ if get(g:, 'elite_mode')
     nnoremap <Left>  :vertical resize +2<CR>
     nnoremap <Right> :vertical resize -2<CR>
 endif
+
+" Enable highlighting of the current line
+set cursorline
+
+"-----------------------------------------------------------------------------
+" GuiCursor see :help guicursor
+"-----------------------------------------------------------------------------
+highlight Cursor guifg=white guibg=#f92666
+highlight iCursor guifg=None guibg=#f92666
+
+set guicursor=n-v-c-i:block-Cursor-blinkon0
+set guicursor+=i:ver10-iCursor-blinkwait300-blinkon200-blinkoff150
+"-----------------------------------------------------------------------------
+
 
 "-----------------------------------------------------------------------------
 " CocVim Configurations
@@ -224,4 +267,3 @@ nnoremap <silent> <space>j  :<C-u>CocNext<CR>
 nnoremap <silent> <space>k  :<C-u>CocPrev<CR>
 " Resume latest coc list.
 nnoremap <silent> <space>p  :<C-u>CocListResume<CR>
-
